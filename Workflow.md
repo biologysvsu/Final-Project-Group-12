@@ -54,7 +54,7 @@ cd-hit -i combined.pep -o combined_cdhit.pep -c 0.95 -n 5
 ```
 
 ```
-nano parse_cd_hit_clusters.py
+nano parse_clusters.py
 ```
 
 ### Paste and Run Python Script
