@@ -122,7 +122,6 @@ conda install -c bioconda seqtk
 seqtk subseq combined_cdhit.pep shared_ids.txt > shared_seqs.fasta
 seqtk subseq combined_cdhit.pep covid_only_ids.txt > covid_only_seqs.fasta
 seqtk subseq combined_cdhit.pep mock_only_ids.txt > mock_only_seqs.fasta
-
 ```
 
 
