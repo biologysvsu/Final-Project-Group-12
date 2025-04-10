@@ -139,6 +139,10 @@ print(" - covid_only_ids.txt")
 python parse_clusters.py
 ```
 
+### Check output 
+```
+wc -l mock_only_ids.txt covid_only_ids.txt shared_ids.txt
+```
 ### Extract sequences with seqtk (install it first if using conda)
 ```
 conda install -c bioconda seqtk
