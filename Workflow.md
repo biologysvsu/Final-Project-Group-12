@@ -22,7 +22,7 @@ cd tutorial4
 ### Install and Load TransDecoder
 ```
 module load anaconda3
-conda create -n transdecoder_env -c bioconda transdecoder
+conda create -n transdecoder_env -c bioconda -c conda-forge transdecoder cd-hit -y
 conda activate transdecoder_env
 ```
 
@@ -40,9 +40,6 @@ TransDecoder.Predict -t covid_trinity_out.Trinity.fasta
 ```
 
 ### Using CD-HIT to find Unique & Shared Transcripts
-```
-module load cd-hit  # or conda install -c bioconda cd-hit
-```
 
 ```
 # Cluster within mock
