@@ -12,8 +12,8 @@ myocean
 ### Return to the Cloned Repository
 
 ``` bash
-ls Student-Led-Tutorial-4
-ls tutorial4
+cd Student-Led-Tutorial-4
+cd tutorial4
 ```
 
 ### Install and Load TransDecoder
