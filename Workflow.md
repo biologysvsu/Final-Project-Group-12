@@ -159,6 +159,10 @@ seqtk subseq combined_cdhit.pep mock_only_ids.txt > mock_only_seqs.fasta
 ```
 
 
+### Swissprot database
+wget https://ftp.uniprot.org/pub/databases/uniprot/current_release/knowledgebase/complete/uniprot_sprot.fasta.gz
+
+
 ### Using AlphaFold2 to predict 3D Structure (via ColabFold)
 
 Useful Tutorial for AlphaFold2 and ChimeraX: https://www.youtube.com/watch?v=eLy7PdzRgLs 
