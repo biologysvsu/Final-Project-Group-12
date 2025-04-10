@@ -43,16 +43,19 @@ TransDecoder.Predict -t covid_trinity_out.Trinity.fasta
 
 ```
 # Cluster within mock
-cd-hit -i mock_trinity_out.Trinity.fasta.transdecoder.pep -o mock_cdhit.pep -c 0.95 -n 5
-
-# Cluster within covid
-cd-hit -i covid_trinity_out.Trinity.fasta.transdecoder.pep -o covid_cdhit.pep -c 0.95 -n 5
-
-# Combine and find shared clusters
+cd-hit -i combined.pep -o combined_cdhit.pep -c 0.95 -n 5 -d 0
+```
+```
+cd-hit -i mock_trinity_out.Trinity.fasta.transdecoder.pep -o mock_cdhit.pep -c 0.95 -n 5 -d 0
+cd-hit -i covid_trinity_out.Trinity.fasta.transdecoder.pep -o covid_cdhit.pep -c 0.95 -n 5 -d 0
 cat mock_cdhit.pep covid_cdhit.pep > combined.pep
-cd-hit -i combined.pep -o combined_cdhit.pep -c 0.95 -n 5
+cd-hit -i combined.pep -o combined_cdhit.pep -c 0.95 -n 5 -d 0
 ```
 
+
+```
+grep -oP '(?<=\>).+?(?=\.\.\.)' combined_cdhit.pep.clstr | head
+```
 ```
 nano parse_clusters.py
 ```
@@ -60,12 +63,22 @@ nano parse_clusters.py
 ### Paste and Run Python Script
 
 ```
+import re
 from collections import defaultdict
+
+# Load mock and covid IDs
+def load_ids(filename):
+    with open(filename) as f:
+        return set(line.strip() for line in f if line.strip())
+
+mock_ids = load_ids("mock_ids_raw.txt")
+covid_ids = load_ids("covid_ids_raw.txt")
 
 clstr_file = "combined_cdhit.pep.clstr"
 clusters = []
 current_cluster = []
 
+# Read clusters
 with open(clstr_file, 'r') as f:
     for line in f:
         if line.startswith(">Cluster"):
@@ -77,36 +90,49 @@ with open(clstr_file, 'r') as f:
     if current_cluster:
         clusters.append(current_cluster)
 
+# Analyze clusters
 summary = defaultdict(list)
 
 for idx, cluster in enumerate(clusters):
-    covid_hits = 0
-    mock_hits = 0
-    seq_ids = []
+    cluster_ids = []
+    has_mock = False
+    has_covid = False
 
     for line in cluster:
-        parts = line.split()
-        seq_id = parts[2].strip('>').strip('...')  # Extract sequence ID
-        seq_ids.append(seq_id)
+        # Extract FASTA ID between '>' and '...'
+        match = re.search(r'>(.+?)\.\.\.', line)
+        if not match:
+            continue
+        seq_id = match.group(1)
+        cluster_ids.append(seq_id)
 
-        if "covid" in seq_id.lower():
-            covid_hits += 1
-        elif "mock" in seq_id.lower():
-            mock_hits += 1
+        if seq_id in mock_ids:
+            has_mock = True
+        if seq_id in covid_ids:
+            has_covid = True
 
-    if covid_hits > 0 and mock_hits > 0:
-        summary["shared"].append((idx, seq_ids))
-    elif covid_hits > 0:
-        summary["covid_only"].append((idx, seq_ids))
-    elif mock_hits > 0:
-        summary["mock_only"].append((idx, seq_ids))
+    if has_mock and has_covid:
+        summary["shared"].append((idx, cluster_ids))
+    elif has_mock:
+        summary["mock_only"].append((idx, cluster_ids))
+    elif has_covid:
+        summary["covid_only"].append((idx, cluster_ids))
 
-# Save outputs
-for category in ["shared", "covid_only", "mock_only"]:
+# Write outputs
+for category in ["shared", "mock_only", "covid_only"]:
     with open(f"{category}_ids.txt", "w") as out:
-        for cluster_id, ids in summary[category]:
+        written = set()
+        for _, ids in summary[category]:
             for sid in ids:
-                out.write(sid + "\n")
+                if sid not in written:
+                    out.write(sid + "\n")
+                    written.add(sid)
+
+print("✅ Done! Wrote:")
+print(" - shared_ids.txt")
+print(" - mock_only_ids.txt")
+print(" - covid_only_ids.txt")
+
 ```
 ### Then run it
 ```
