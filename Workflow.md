@@ -53,6 +53,15 @@ cat mock_cdhit.pep covid_cdhit.pep > combined.pep
 cd-hit -i combined.pep -o combined_cdhit.pep -c 0.95 -n 5
 ```
 
+```
+nano parse_cd_hit_clusters.py
+```
+
+### Paste and Run Python Script
+
+
+
+
 ### Using AlphaFold2 to predict 3D Structure (via ColabFold)
 
 Useful Tutorial for AlphaFold2 and ChimeraX: https://www.youtube.com/watch?v=eLy7PdzRgLs 
