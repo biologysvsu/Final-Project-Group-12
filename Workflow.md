@@ -51,7 +51,11 @@ cd-hit -i covid_trinity_out.Trinity.fasta.transdecoder.pep -o covid_cdhit.pep -c
 cat mock_cdhit.pep covid_cdhit.pep > combined.pep
 cd-hit -i combined.pep -o combined_cdhit.pep -c 0.95 -n 5 -d 0
 ```
-
+```
+# Include .p1/.p2 suffix in the IDs
+grep "^>" mock_cdhit.pep | cut -d ' ' -f1 | sed 's/^>//' > mock_ids_raw.txt
+grep "^>" covid_cdhit.pep | cut -d ' ' -f1 | sed 's/^>//' > covid_ids_raw.txt
+```
 
 ```
 grep -oP '(?<=\>).+?(?=\.\.\.)' combined_cdhit.pep.clstr | head
