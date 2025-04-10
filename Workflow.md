@@ -166,6 +166,9 @@ wget https://ftp.uniprot.org/pub/databases/uniprot/current_release/knowledgebase
 ### Load blast
 conda install -c bioconda blast
 
+### Blast against covid fasta file.
+ blastp -query covid_only_seqs.fasta -db swissprot_db -out covid_blast_only_seqs_results.txt
+
 
 ### Using AlphaFold2 to predict 3D Structure (via ColabFold)
 
