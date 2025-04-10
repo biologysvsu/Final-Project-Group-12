@@ -109,18 +109,21 @@ for category in ["shared", "covid_only", "mock_only"]:
                 out.write(sid + "\n")
 ```
 ### Then run it
+```
 python parse_clusters.py
+```
 
 ### Extract sequences with seqtk (install it first if using conda)
+```
 conda install -c bioconda seqtk
-
+```
 ### Then run to extract sequences:
-
+```
 seqtk subseq combined_cdhit.pep shared_ids.txt > shared_seqs.fasta
 seqtk subseq combined_cdhit.pep covid_only_ids.txt > covid_only_seqs.fasta
 seqtk subseq combined_cdhit.pep mock_only_ids.txt > mock_only_seqs.fasta
 
-
+```
 
 
 ### Using AlphaFold2 to predict 3D Structure (via ColabFold)
