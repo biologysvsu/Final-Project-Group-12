@@ -59,6 +59,7 @@ nano parse_cd_hit_clusters.py
 
 ### Paste and Run Python Script
 
+```
 from collections import defaultdict
 
 clstr_file = "combined_cdhit.pep.clstr"
@@ -106,7 +107,7 @@ for category in ["shared", "covid_only", "mock_only"]:
         for cluster_id, ids in summary[category]:
             for sid in ids:
                 out.write(sid + "\n")
-
+```
 ### Then run it
 python parse_clusters.py
 
