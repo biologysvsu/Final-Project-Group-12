@@ -127,7 +127,7 @@ seqtk subseq complete_orfs.fa weak_annot_ids.txt > alphafold_weakannot_candidate
 ```
 
 # All files are in the repository
-- alphafold_lowpid_candidates.fa has 77 sequences
-- alphafold_nohit_candidates.fa has 2 sequences
+- alphafold_lowpid_candidates.fa has 2 sequences
+- alphafold_nohit_candidates.fa has 77 sequences
 - alphafold_weakannot_candidates.fa has 7 sequences
 - alphafold_all_candidates.fa has has 86 sequences to work with
