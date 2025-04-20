@@ -184,3 +184,10 @@ colabfold_batch alphafold_clean_named.fa out_dir
 ```
 sbatch colabfold.slurm
 ```
+
+# Install Folkseek to compare models to database and predict function.
+```
+module load anaconda3
+conda create -n foldseek -c bioconda -c conda-forge foldseek
+conda activate foldseek
+```
