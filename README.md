@@ -131,3 +131,15 @@ seqtk subseq complete_orfs.fa weak_annot_ids.txt > alphafold_weakannot_candidate
 - alphafold_nohit_candidates.fa has 77 sequences
 - alphafold_weakannot_candidates.fa has 7 sequences
 - alphafold_all_candidates.fa has has 86 sequences to work with
+
+#Installing AlphaFold2 thru ColabFold
+
+```
+module load anaconda3
+conda create -n colabfold -c conda-forge -c bioconda colabfold -y
+conda activate colabfold
+```
+- Run alphafold, make sure your protein file is calles "alphafold_all_candidates.fa"
+```
+colabfold_batch alphafold_all_candidates.fa out_dir
+```
