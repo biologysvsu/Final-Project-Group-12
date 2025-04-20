@@ -140,11 +140,47 @@ conda create -n colabfold -c conda-forge -c bioconda colabfold -y
 conda activate colabfold
 ```
 - Run alphafold, make sure your protein file is calles "alphafold_all_candidates.fa"
-- Remove stop codons
+- Remove stop codons and fix name
 ```
-sed 's/\*//g' alphafold_all_candidates.fa > alphafold_clean.fa
+awk '
+/^>/ {
+  match($0, /TRINITY_DN[0-9]+/); id = substr($0, RSTART, RLENGTH);
+  match($0, /len:[0-9]+/); len = substr($0, RSTART+4, RLENGTH-4);
+  print ">" id "_len" len;
+  next
+}
+{
+  gsub("\\*", ""); print
+}
+' alphafold_all_candidates.fa > alphafold_clean_named.fa
+
 ```
--run alphafold
+-create slurm script
 ```
-colabfold_batch alphafold_all_candidates.fa out_dir
+vi colabfold.slurm
+```
+- type i and enter:
+```
+#!/bin/bash
+#SBATCH --job-name=colabfold_run
+#SBATCH --cpus-per-task=8
+#SBATCH --mem=100G
+#SBATCH --time=8:00:00
+#SBATCH --output=colabfold_%j.log
+#SBATCH --mail-type=ALL
+#SBATCH --mail-user=jparedes@email.edu
+
+
+# Load conda module
+module load anaconda3
+
+# Activate ColabFold environment
+conda activate colabfold
+
+# Run prediction
+colabfold_batch alphafold_clean_named.fa out_dir
+```
+- run script
+```
+sbatch colabfold.slurm
 ```
