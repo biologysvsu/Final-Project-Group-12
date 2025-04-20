@@ -140,6 +140,11 @@ conda create -n colabfold -c conda-forge -c bioconda colabfold -y
 conda activate colabfold
 ```
 - Run alphafold, make sure your protein file is calles "alphafold_all_candidates.fa"
+- Remove stop codons
+```
+sed 's/\*//g' alphafold_all_candidates.fa > alphafold_clean.fa
+```
+-run alphafold
 ```
 colabfold_batch alphafold_all_candidates.fa out_dir
 ```
