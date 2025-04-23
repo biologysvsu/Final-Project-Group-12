@@ -1,7 +1,7 @@
 # Final-Project-Group-12
 # Can Bioinformatics tools be used to visualize the structure of an unknown/hypothetical protein, and compare function of known functional proteins?
 ## **Dataset Description**
-We will use the same RNA-seq dataset as in the STAR tutorial:
+We will download RNA-seq data for mock-infected and COVID-19-infected human cell lines from the provided SRA project.
 - **Mock-infected cells**:
   - SRA Accessions: `SRR11412215`, `SRR11412216`
 - **COVID-19-infected cells**:
@@ -17,9 +17,9 @@ myocean
 git clone
 ```
 ``` bash
-cd Student-Led-Tutorial-4
-mkdir tutorial4
-cd tutorial4
+cd Final-Project-Group-12
+mkdir tutorial
+cd tutorial
 ```
 ### **Download Instructions**
 Use the SRA Toolkit (must be installed beforehand if run locally, otherwise available in most HPCs) to download paired-end FASTQ files:
@@ -95,10 +95,6 @@ Trinity --seqType fq --max_memory 128G \
 2. Output:
 - Trinity.fasta: Contains assembled transcripts.
 
-## This is a continuation of Student-Lead Tutorial 4
-
-
-
 
 ### Make sure you go to your ocean folder
 ``` bash
@@ -107,8 +103,8 @@ myocean
 ### Return to the Cloned Repository
 
 ``` bash
-cd Student-Led-Tutorial-4
-cd tutorial4
+cd Final-Project-Group-12
+cd tutorial
 ```
 
 ### Install and Load TransDecoder
